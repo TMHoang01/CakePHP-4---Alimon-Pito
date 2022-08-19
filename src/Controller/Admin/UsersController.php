@@ -11,7 +11,15 @@ class UsersController extends AppController
 
     public function index()
     {
-        $users = $this->paginate($this->Users);
+        $key = $this->request->getQuery('key');
+        if($key){
+            $query = $this->Users
+                ->find('all')
+                ->where(['or' => ['username like' => '%'.$key.'%', 'email like' => '%'.$key.'%']]);
+        }else{
+            $query = $this->Users;
+        }
+        $users = $this->paginate($query);
 
         $this->set(compact('users'));
     }
