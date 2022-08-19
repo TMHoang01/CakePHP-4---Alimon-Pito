@@ -79,7 +79,8 @@ class UsersTable extends Table
             ->integer('amount')
             ->requirePresence('amount', 'create')
             ->notEmptyString('amount');
-
+        $validator
+            ->sameAs('retype_password', 'password', 'Password not match');
         $validator
             ->scalar('password')
             ->maxLength('password', 100)
