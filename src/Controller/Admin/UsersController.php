@@ -79,23 +79,28 @@ class UsersController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
-    public function login(){
-        if($this->request->is('post')){
-            $user = $this->Auth->identify();
-//            debug($user);
-//            exit;
-            if($user){
-                $this->Auth->setUser($user);
-                return $this->redirect(['controller' => 'Users' ,'action' => ' index']);
+    public function login()
+    {
+        $this->request->allowMethod(['get', 'post']);
+        $result = $this->Authentication->getResult();
+        // regardless of POST or GET, redirect if user is logged in
+        if ($result && $result->isValid()) {
 
-            }else{
-                $this->Flash->error("Incorrect user");
-            }
+            return $this->redirect(['action' => ' index']);
+        }
+        // display error if user submitted and authentication failed
+        if ($this->request->is('post') && !$result->isValid()) {
+            $this->Flash->error(__('Invalid username or password'));
         }
     }
 
     public function logout(){
-            return $this->redirect($this->Auth->logout());
+        $result = $this->Authentication->getResult();
+        // regardless of POST or GET, redirect if user is logged in
+        if ($result && $result->isValid()) {
+            $this->Authentication->logout();
+            return $this->redirect(['controller' => 'Users', 'action' => 'login']);
+        }
     }
 
 
