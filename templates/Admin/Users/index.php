@@ -46,7 +46,13 @@
                     <td><?= h($user->email) ?></td>
                     <td><?= $this->Number->format($user->amount) ?></td>
                     <td><?= h($user->image) ?></td>
-                    <td><?= $this->Number->format($user->status) ?></td>
+                    <td>
+                        <?php if($user->status == 1): ?>
+                        <?= $this->Form->postLink(__('Inactive'),  ['action' => 'userStatus', $user->id, $user->status], ['block'=>true, 'confirm' => __(' Are you sure you want to inactive user # {0}?', $user->id)]) ?>
+                        <?php else: ?>
+                        <?= $this->Form->postLink(__('Active'),  ['action' => 'userStatus', $user->id, $user->status], ['block'=>true, 'confirm' => __(' Are you sure you want to Active user # {0}?', $user->id)]) ?>
+                        <?php endif; ?>
+                    </td>
                     <td><?= h($user->created) ?></td>
                     <td><?= h($user->modified) ?></td>
                     <td class="actions">

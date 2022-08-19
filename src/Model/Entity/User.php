@@ -39,7 +39,7 @@ class User extends Entity
         'amount' => true,
         'password' => true,
         'image' => true,
-        'status' => true,
+        'status' => true ,
         'created' => true,
         'modified' => true,
         'profiles' => true,

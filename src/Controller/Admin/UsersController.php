@@ -93,8 +93,13 @@ class UsersController extends AppController
         $result = $this->Authentication->getResult();
         // regardless of POST or GET, redirect if user is logged in
         if ($result && $result->isValid()) {
+            if($result->getData()->status == 1){
+                $this->Flash->error("You not authentication access");
+                $this->Authentication->logout();
+                return $this->redirect(['action' => 'login']);
+            }
 
-            return $this->redirect(['action' => ' index']);
+            return $this->redirect(['action' => 'index']);
         }
         // display error if user submitted and authentication failed
         if ($this->request->is('post') && !$result->isValid()) {
@@ -109,6 +114,26 @@ class UsersController extends AppController
             $this->Authentication->logout();
             return $this->redirect(['controller' => 'Users', 'action' => 'login']);
         }
+    }
+
+    public function  userStatus($id = null, $status ){
+        $this->request->allowMethod(['post']);
+        $user = $this->Users->get($id);
+        if($user->status ==1){
+            $user->status = 0;
+        }else{
+            $user->status = 1;
+        }
+        if($this->Users->save($user)){
+            $this->Flash->success(__("The user {0} has change status.", $user->id));
+            return$this->redirect(['action'=> 'index']);
+        }
+        $this->Flash->success(__("The user {0} has change status.", $user->id));
+        $this->set(compact('user'));
+
+
+
+
     }
 
 
