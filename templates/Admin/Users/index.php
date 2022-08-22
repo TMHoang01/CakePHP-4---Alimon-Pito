@@ -14,13 +14,13 @@
     <?= $this->Form->create(null, ['type' => 'get']) ?>
     <?= $this->Form->control('key',['label' => 'Search', 'value' => $this->request->getQuery('key')]) ?>
     <?= $this->Form->submit() ?>
-    <?= $this->Form->create() ?>
+    <?= $this->Form->end() ?>
 
 
 
     <div class="table-responsive">
-        <?= $this->Form->create(null,['url' =>['action' => 'deleteAll'] ]) ?>
-        <button>Deletel All</button>
+        <?= $this->Form->create(null,['url'=> ['action' => 'deleteAll']]) ?>
+        <button >Delete All</button>
         <table>
             <thead>
                 <tr>
@@ -40,7 +40,6 @@
                 <?php foreach ($users as $user): ?>
                 <tr>
                     <td><?= $this->Form->checkbox('ids[]',['value' => $user->id]) ?> </td>
-
                     <td><?= $this->Number->format($user->id) ?></td>
                     <td><?= h($user->username) ?></td>
                     <td><?= h($user->email) ?></td>
@@ -65,6 +64,7 @@
             </tbody>
         </table>
         <?= $this->Form->end(); ?>
+
         <?= $this->fetch('postLink'); ?>
     </div>
 

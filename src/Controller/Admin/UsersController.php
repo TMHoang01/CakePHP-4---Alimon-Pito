@@ -116,7 +116,7 @@ class UsersController extends AppController
         $user = $this->Users->get($id);
         $imgPath = WWW_ROOT.'img'.DS.$user->image;
         if ($this->Users->delete($user)) {
-            if(file_exists($imgPath)){
+            if(is_file($imgPath)){
                 unlink($imgPath);
             }
             $this->Flash->success(__('The user has been deleted.'));
@@ -126,7 +126,23 @@ class UsersController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
+
+    public  function deleteAll(){
+//        exit("hello");
+        $this->request->allowMethod(['post', 'delete']);
+        $ids = $this->request->getData('ids');
+//        debug($ids);exit;
+        if($this->Users->deleteAll(['Users.id IN' => $ids])){
+            $this->Flash->success(__('The user has been deleted.'));
+        }else {
+            $this->Flash->error(__('The user could not be deleted. Please, try again.'));
+        }
+        return $this->redirect(['action' => 'index']);
+
+
+    }
     public function login()
+
     {
         $this->request->allowMethod(['get', 'post']);
         $result = $this->Authentication->getResult();
