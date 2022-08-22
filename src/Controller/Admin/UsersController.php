@@ -68,11 +68,37 @@ class UsersController extends AppController
 
     public function edit($id = null)
     {
-        $user = $this->Users->get($id, [
-            'contain' => [],
-        ]);
+        $user = $this->Users->get($id);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $user = $this->Users->patchEntity($user, $this->request->getData());
+
+            if(!$user->getErrors ){
+                $image = $this->request->getData('change_image');
+//                debug($image);
+                $name_img = $image->getClientFilename();
+
+                if($name_img){
+                    $path = WWW_ROOT.'img'.DS.'user-img';
+
+                    if(!is_dir($path))
+                        mkdir($path,0775);
+
+                    $targetPath = $path.DS.$name_img;
+                    $image->moveTo($targetPath);
+
+                    $targetOldPath = $path.DS.$user->image;
+
+                    if(file_exists($targetOldPath)){
+                        unlink($targetOldPath);
+                    }
+
+                    $user->image = 'user-img/'.$name_img;
+
+
+                }
+
+            }
+
             if ($this->Users->save($user)) {
                 $this->Flash->success(__('The user has been saved.'));
 
@@ -83,18 +109,16 @@ class UsersController extends AppController
         $this->set(compact('user'));
     }
 
-    /**
-     * Delete method
-     *
-     * @param string|null $id User id.
-     * @return \Cake\Http\Response|null|void Redirects to index.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
+
     public function delete($id = null)
     {
         $this->request->allowMethod(['post', 'delete']);
         $user = $this->Users->get($id);
+        $imgPath = WWW_ROOT.'img'.DS.$user->image;
         if ($this->Users->delete($user)) {
+            if(file_exists($imgPath)){
+                unlink($imgPath);
+            }
             $this->Flash->success(__('The user has been deleted.'));
         } else {
             $this->Flash->error(__('The user could not be deleted. Please, try again.'));
