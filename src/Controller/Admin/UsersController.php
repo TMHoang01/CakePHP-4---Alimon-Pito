@@ -45,10 +45,14 @@ class UsersController extends AppController
                 $image = $this->request->getData('image_file');
 //                debug($image);
                 $name_img = $image->getClientFilename();
-                $targetPath = WWW_ROOT.'img'.DS.$name_img;
+
+                $path = WWW_ROOT.'img'.DS.'user-img';
+                if(!is_dir($path))
+                    mkdir($path,0775);
+                $targetPath = $path.DS.$name_img;
                 if($name_img)
                 $image->moveTo($targetPath);
-                $user->image = $name_img;
+                $user->image = 'user-img/'.$name_img;
             }
 
             if ($this->Users->save($user)) {
