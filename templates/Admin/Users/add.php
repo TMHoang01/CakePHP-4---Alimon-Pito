@@ -13,7 +13,7 @@
     </aside>
     <div class="column-responsive column-80">
         <div class="users form content">
-            <?= $this->Form->create($user) ?>
+            <?= $this->Form->create($user, ['type' => 'file']) ?>
             <fieldset>
                 <legend><?= __('Add User') ?></legend>
                 <?php
@@ -22,7 +22,7 @@
                     echo $this->Form->control('amount');
                     echo $this->Form->control('password');
                     echo $this->Form->control('retype_password', ['type' => 'password']);
-                    echo $this->Form->control('image');
+                    echo $this->Form->control('image_file',['type' => 'file']);
                     echo $this->Form->control('status');
                 ?>
             </fieldset>

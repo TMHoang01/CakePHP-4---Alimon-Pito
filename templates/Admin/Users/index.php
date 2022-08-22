@@ -45,7 +45,7 @@
                     <td><?= h($user->username) ?></td>
                     <td><?= h($user->email) ?></td>
                     <td><?= $this->Number->format($user->amount) ?></td>
-                    <td><?= h($user->image) ?></td>
+                    <td><?= $this->Html->image(h($user->image), ['alt' => 'CakePHP']); ?></td>
                     <td>
                         <?php if($user->status == 1): ?>
                         <?= $this->Form->postLink(__('Inactive'),  ['action' => 'userStatus', $user->id, $user->status], ['block'=>true, 'confirm' => __(' Are you sure you want to inactive user # {0}?', $user->id)]) ?>
