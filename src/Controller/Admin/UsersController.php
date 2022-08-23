@@ -54,13 +54,14 @@ class UsersController extends AppController
                 $image->moveTo($targetPath);
                 $user->image = 'user-img/'.$name_img;
             }
+            $user->profile->user_id = $user->id;
 
             if ($this->Users->save($user)) {
                 $this->Flash->success(__('The user has been saved.'));
                 return $this->redirect(['action' => 'index']);
             }
 
-            $this->Flash->error(__('The user could not be saved. Please, try again.'));
+            $this->Flash->error(__('The user could not be saved! Please, try again.'));
         }
         $this->set(compact('user'));
     }
@@ -148,7 +149,7 @@ class UsersController extends AppController
         $result = $this->Authentication->getResult();
         // regardless of POST or GET, redirect if user is logged in
         if ($result && $result->isValid()) {
-            if($result->getData()->status == 1){
+            if($result->getData()->status != 1){
                 $this->Flash->error("You not authentication access");
                 $this->Authentication->logout();
                 return $this->redirect(['action' => 'login']);

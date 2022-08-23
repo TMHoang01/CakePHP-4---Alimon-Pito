@@ -48,12 +48,10 @@ class UsersTable extends Table
 
         $this->addBehavior('Timestamp');
 
-        $this->hasMany('Profiles', [
-            'foreignKey' => 'user_id',
-        ]);
-        $this->hasMany('Skills', [
-            'foreignKey' => 'user_id',
-        ]);
+        $this-> hasOne('Profiles');
+//        $this->hasMany('Skills', [
+//            'foreignKey' => 'user_id',
+//        ]);
     }
 
     /**
@@ -79,6 +77,7 @@ class UsersTable extends Table
             ->integer('amount')
             ->requirePresence('amount', 'create')
             ->notEmptyString('amount');
+
         $validator
             ->sameAs('retype_password', 'password', 'Password not match');
         $validator

@@ -22,6 +22,7 @@
                     echo $this->Form->control('amount');
                     echo $this->Form->control('password');
                     echo $this->Form->control('retype_password', ['type' => 'password']);
+                    echo $this->Form->control('profile.mobile');
                     echo $this->Form->control('image_file',['type' => 'file']);
                     echo $this->Form->control('status');
                 ?>

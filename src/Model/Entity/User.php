@@ -42,7 +42,7 @@ class User extends Entity
         'status' => true ,
         'created' => true,
         'modified' => true,
-        'profiles' => true,
+        'profile' => true,
         'skills' => true,
     ];
 
