@@ -147,6 +147,7 @@ class UsersController extends AppController
     {
         $this->request->allowMethod(['get', 'post']);
         $result = $this->Authentication->getResult();
+
         // regardless of POST or GET, redirect if user is logged in
         if ($result && $result->isValid()) {
             if($result->getData()->status != 1){
@@ -154,7 +155,7 @@ class UsersController extends AppController
                 $this->Authentication->logout();
                 return $this->redirect(['action' => 'login']);
             }
-
+            $this->UserLogs->saveIP($result->getData()->id);
             return $this->redirect(['action' => 'index']);
         }
         // display error if user submitted and authentication failed

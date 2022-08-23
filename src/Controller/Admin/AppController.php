@@ -16,6 +16,8 @@ class AppController extends Controller
 
         $this->loadComponent('RequestHandler');
         $this->loadComponent('Flash');
+        $this->loadComponent('UserLogs');
+
         $this->loadComponent('Authentication.Authentication');
 //        $this->Auth->allow(["login","add",'index', 'add']);
 //        $this->Auth->allow();
