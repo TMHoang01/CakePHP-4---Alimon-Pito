@@ -16,7 +16,11 @@
         'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min'
         //,'https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js'
     ],['block' => 'js']); ?>
-
+    <style>
+        .active a{
+            color:#000 ;
+        }
+    </style>
 </head>
 
 <body>
@@ -30,6 +34,24 @@
         <p class="lead">This is a modified jumbotron that occupies the entire horizontal space of its parent.</p>
     </div>
 </div>
+
+<?php
+
+$this->Breadcrumbs->setTemplates([
+    'wrapper' => '<nav aria-label="breadcrumb"><ol class="breadcrumb" {{attrs}}>{{content}}</ol></nav>',
+    'item' => '<li  {{attrs}}><a href="{{url}}"{{innerAttrs}}>{{title}}</a></li>{{separator}}',
+]);
+echo $this->Breadcrumbs->render();
+
+?>
+
+<!--<nav aria-label="breadcrumb">-->
+<!--    <ol class="breadcrumb">-->
+<!--        <li class="breadcrumb-item"><a href="">Home</a></li>-->
+<!--        <li class="breadcrumb-item"><a href="">a</a></li>-->
+<!--        <li class="breadcrumb-item active"><a href="">s</a></li>-->
+<!--    </ol>-->
+<!--</nav>-->
 
 <?= $this->fetch('content'); ?>
 
