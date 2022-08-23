@@ -1,8 +1,5 @@
 <?php
-/**
- * @var \App\View\AppView $this
- * @var \Cake\Datasource\EntityInterface[]|\Cake\Collection\CollectionInterface $users
- */
+$this->Html->css('my',['block' => true]);
 ?>
 
 
