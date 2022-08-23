@@ -12,6 +12,11 @@ class BlogsController extends AppController
         parent::beforeFilter($event);
         $this->viewBuilder()->setLayout('blog');
 
+        $this->loadModel('Menus');
+
+        $menus = $this->Menus->find('all', ['contain' => ['Submenus']])->all();
+
+        $this->set('menus',$menus);
     }
 
     public function index(){
