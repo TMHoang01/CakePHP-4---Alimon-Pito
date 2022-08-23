@@ -29,6 +29,8 @@
                     <th><?= $this->Paginator->sort('username') ?></th>
                     <th><?= $this->Paginator->sort('email') ?></th>
                     <th><?= $this->Paginator->sort('amount') ?></th>
+                    <th><?= $this->Paginator->sort('phone') ?></th>
+                    <th>Skills</th>
                     <th><?= $this->Paginator->sort('image') ?></th>
                     <th><?= $this->Paginator->sort('status') ?></th>
                     <th><?= $this->Paginator->sort('created') ?></th>
@@ -44,6 +46,14 @@
                     <td><?= h($user->username) ?></td>
                     <td><?= h($user->email) ?></td>
                     <td><?= $this->Number->format($user->amount) ?></td>
+                    <td><?= @h($user->profile->mobile) ?></td>
+                    <td>
+                        <?php
+                            foreach ($user->skills as $key => $skill){
+                                echo $skill->name." ";
+                            }
+                        ?>
+                    </td>
                     <td><?= $this->Html->image(h($user->image), ['alt' => 'CakePHP']); ?></td>
                     <td>
                         <?php if($user->status == 1): ?>
